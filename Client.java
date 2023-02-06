@@ -10,7 +10,7 @@ public class Client {
     public Client(){
         try {
             System.out.println("Sending request to server..");
-            socket = new Socket("127.0.0.1",7777);
+            socket = new Socket("192.168.56.1",7777);
             System.out.println("Connection done..");
 
 
@@ -21,28 +21,29 @@ public class Client {
             startWritting();
 
         } catch (Exception e) {
-            // TODO: handle exception
             e.printStackTrace();
+
         }
     }
 
     public void startReading(){
        
-        Runnable r1 = ()->{
+        Runnable r1 = () -> {
 
             System.out.println("Reader started...");
 
             while (true) {
                 try{
-                String msg = br.readLine();
-                if (msg.equals("exit")) {
-                    System.out.println("Server terminated the chat");
-                    break;
-                }
-                System.out.println("Server: "+ msg);
+                    String msg = br.readLine();
+                    if (msg.equals("exit")) {
+                        System.out.println("Server terminated the chat");
+                        break;
+                    }
+                    System.out.println("Server: "+ msg);
                 }
                 catch(Exception e){
                     e.printStackTrace();
+        
                 }
             }
         };
@@ -60,9 +61,10 @@ public class Client {
                     out.println(content);
                     out.flush();
 
-                } catch (Exception e) {
-                    // TODO: handle exception
+                } 
+                catch (Exception e) {
                     e.printStackTrace();
+        
                 }
             }
         };
@@ -70,7 +72,7 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        System.out.println("this is client");
+        System.out.println("this is client....");
         new Client();
     }
 }

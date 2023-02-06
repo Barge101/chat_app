@@ -7,14 +7,16 @@ class Server{
     
     BufferedReader br;
     PrintWriter out;
+
     public Server(){
         try{
             server = new ServerSocket(7777);
             System.out.println("server is ready to accept connection");
-            System.out.println("waiting");
-            server.accept();
+            System.out.println("waiting.....");
+            socket=server.accept();
 
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            br = new BufferedReader(new InputStreamReader(socket.
+            getInputStream()));
             out = new PrintWriter(socket.getOutputStream());
 
             startReading();
@@ -58,7 +60,6 @@ class Server{
                     out.flush();
 
                 } catch (Exception e) {
-                    // TODO: handle exception
                     e.printStackTrace();
                 }
             }
@@ -67,7 +68,7 @@ class Server{
     }
 
     public static void main(String[] args) {
-        System.out.println("this is server");
+        System.out.println("this is server..going to start server");
         new Server();
     }
 }
