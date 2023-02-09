@@ -2,7 +2,7 @@ import java.net.*;
 import java.io.*;
 
 public class Client {
-
+    private boolean status=false;
     Socket socket;
     BufferedReader br;
     PrintWriter out;
@@ -31,20 +31,20 @@ public class Client {
         Runnable r1 = () -> {
 
             System.out.println("Reader started...");
-
-            while (true) {
-                try{
-                    String msg = br.readLine();
-                    if (msg.equals("exit")) {
-                        System.out.println("Server terminated the chat");
-                        break;
-                    }
-                    System.out.println("Server: "+ msg);
+            try{
+                while (true) {
+                        String msg = br.readLine();
+                        if (msg.equals("exit")) {
+                            System.out.println("Server terminated the chat");
+                            status = true;
+                            break;
+                        }
+                        System.out.println("Server: "+ msg);
+                    
                 }
-                catch(Exception e){
-                    e.printStackTrace();
-        
-                }
+            }
+            catch(Exception e){
+                e.printStackTrace();
             }
         };
 
@@ -53,19 +53,23 @@ public class Client {
     public void startWritting(){
         Runnable r2 = ()->{
             System.out.println("writer started...");
-            while (true) {
-                try {
-                    BufferedReader br1 = new BufferedReader
-                    (new InputStreamReader(System.in));
-                    String content = br1.readLine();
-                    out.println(content);
-                    out.flush();
+            try{
+                while (true) {
 
-                } 
-                catch (Exception e) {
-                    e.printStackTrace();
-        
+                        if (status) {
+                            break;
+                        }
+                        BufferedReader br1 = new BufferedReader
+                        (new InputStreamReader(System.in));
+                        String content = br1.readLine();
+                        out.println(content);
+                        out.flush();
+                        if(content.equals("exit")) break;
+                
                 }
+            }
+            catch(Exception e){
+                e.printStackTrace();
             }
         };
         new Thread(r2).start();
