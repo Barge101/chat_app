@@ -36,7 +36,7 @@ public class Client {
                         String msg = br.readLine();
                         if (msg.equals("exit")) {
                             System.out.println("Server terminated the chat");
-                            status = true;
+                            socket.close();
                             break;
                         }
                         System.out.println("Server: "+ msg);
@@ -44,7 +44,8 @@ public class Client {
                 }
             }
             catch(Exception e){
-                e.printStackTrace();
+                //e.printStackTrace();
+                System.out.println("Connection is closed....");
             }
         };
 
@@ -54,18 +55,17 @@ public class Client {
         Runnable r2 = ()->{
             System.out.println("writer started...");
             try{
-                while (true) {
-
-                        if (status) {
-                            break;
-                        }
+                while (!socket.isClosed()) {
                         BufferedReader br1 = new BufferedReader
                         (new InputStreamReader(System.in));
                         String content = br1.readLine();
                         out.println(content);
                         out.flush();
-                        if(content.equals("exit")) break;
-                
+                        
+                        if(content.equals("exit")){
+                            socket.close();
+                            break;
+                        } 
                 }
             }
             catch(Exception e){
