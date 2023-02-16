@@ -1,3 +1,4 @@
+import java.io.*;
 import java.net.*;
 
 import javax.swing.BorderFactory;
@@ -13,10 +14,8 @@ import javax.swing.SwingConstants;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.*;
 
 public class Client extends JFrame{
-    private boolean status=false;
     Socket socket;
     BufferedReader br;
     PrintWriter out;
